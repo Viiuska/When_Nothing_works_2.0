@@ -1,11 +1,12 @@
 const express = require('express');
-const router = express.Router()
-const passport = require('passport')
+const router = express.Router();
+const passport = require('passport');
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
 
-const User = require('../models/user')
 const config = require('../config/database');
+const User = require('../models/user');
+const Post = require("../models/post");
 
 
 // Register
@@ -67,7 +68,23 @@ router.post('authentivate', (req, res, next)=>{
 // Profile
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next)=>{
     res.json({user:req.user});
-})
+});
 
+
+// Post
+router.post('', passport.authenticate('jwt', {session:false}), (req, res, next)=>{
+  Post.create({
+    username:req.body.username,
+    subject:req.body.subject,
+    content:req.body.content,
+  }).then(result =>{
+      res.json({success:true, msg:"Post added"})
+  });
+});
+
+// Display Posts
+router.get('', (req, res, next)=>{
+  res.send("hello")
+});
 
 module.exports = router;

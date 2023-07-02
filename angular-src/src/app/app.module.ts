@@ -15,6 +15,7 @@ import { ValidateService } from './services/validate.service';
 import {FlashMessagesModule} from 'angular2-flash-messages'
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { CommentFormComponent } from './components/comment-form/comment-form.component';
 
 
 const appRoutes:Routes=[
@@ -32,7 +33,8 @@ const appRoutes:Routes=[
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    ProfileComponent
+    ProfileComponent,
+    CommentFormComponent
   ],
   imports: [
     BrowserModule,
