@@ -5,6 +5,7 @@ const cors = require('cors')
 const passport = require('passport');
 const mongoose = require('mongoose')
 const config = require('./config/database')
+const session = require('express-session')
 
 mongoose.connect(config.database);
 
@@ -29,6 +30,14 @@ app.use(cors());
 
 // Set static Folder
 app.use(express.static(path.join(__dirname, 'public')))
+
+// Express-session Middleware
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+  }))
 
 //Body Parser middleware
 app.use(bodyParser.json());

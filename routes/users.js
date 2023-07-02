@@ -7,10 +7,12 @@ const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 const User = require('../models/user');
 const Post = require("../models/post");
+const Comment = require("../models/comment");
+const comment = require('../models/comment');
 
 
 // Register
-router.post('register', (req, res, next)=>{
+router.post('/register', (req, res, next)=>{
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(req.body.password, salt, (err, hash) => {
             if(err){res.json({success:false, msg:"Failed to register"})}
@@ -31,7 +33,7 @@ router.post('register', (req, res, next)=>{
 
 
 // Authenticate
-router.post('authentivate', (req, res, next)=>{
+router.post('/authenticate', (req, res, next)=>{
     User.findOne({username: req.body.username}, (err, user) => {
         if(err) {
           throw err
@@ -82,9 +84,51 @@ router.post('', passport.authenticate('jwt', {session:false}), (req, res, next)=
   });
 });
 
+
 // Display Posts
 router.get('', (req, res, next)=>{
-  res.send("hello")
+  Post.find({}, (err, posts) =>{
+    if(err) return next(err);
+    res.json({post:posts});
+  })
 });
+
+
+// Add comment
+router.post('/comment', passport.authenticate('jwt', {session:false}), (req, res, next)=>{
+  Post.findOne({subject: req.body.subject}, (err, post) => {
+    if(err) {
+      throw err
+    };
+    if(!post){
+      return res.json({success:false, msg:"Post not found"})
+    } else{
+      Comment.create({
+        username:req.body.username,
+        subject:req.body.subject,
+        content:req.body.content,
+      }).then(result =>{
+          res.json({success:true, msg:"Comment added"})
+      });
+    }
+  });
+});
+
+// Display Post and it's comments
+router.get('/post/:id', (req, res, next)=>{
+  Post.findById({subject: req.params}, (err, post) =>{
+    if(err) return next(err);
+    if(post){
+      Comment.findById({subject: req.params}, (err, comment)=>{
+        if(err) return next(err);
+        res.json({post:post, comments: comment});
+      })
+    } else{
+      res.json({msg: "Something went wrong while searhing content"});
+    }
+  })
+});
+
+
 
 module.exports = router;
