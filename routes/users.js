@@ -8,7 +8,6 @@ const config = require('../config/database');
 const User = require('../models/user');
 const Post = require("../models/post");
 const Comment = require("../models/comment");
-const comment = require('../models/comment');
 
 
 // Register
@@ -32,7 +31,7 @@ router.post('/register', (req, res, next)=>{
 });
 
 
-// Authenticate
+// Authenticate (login)
 router.post('/authenticate', (req, res, next)=>{
     User.findOne({username: req.body.username}, (err, user) => {
         if(err) {
@@ -74,7 +73,7 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res,
 
 
 // Post
-router.post('', passport.authenticate('jwt', {session:false}), (req, res, next)=>{
+router.post('/post', passport.authenticate('jwt', {session:false}), (req, res, next)=>{
   Post.create({
     username:req.body.username,
     subject:req.body.subject,
@@ -86,7 +85,7 @@ router.post('', passport.authenticate('jwt', {session:false}), (req, res, next)=
 
 
 // Display Posts
-router.get('', (req, res, next)=>{
+router.get('/post', (req, res, next)=>{
   Post.find({}, (err, posts) =>{
     if(err) return next(err);
     res.json({post:posts});
@@ -113,6 +112,7 @@ router.post('/comment', passport.authenticate('jwt', {session:false}), (req, res
     }
   });
 });
+
 
 // Display Post and it's comments
 router.get('/post/:id', (req, res, next)=>{

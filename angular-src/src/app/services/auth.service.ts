@@ -8,6 +8,8 @@ import { tokenNotExpired } from 'angular2-jwt';
 export class AuthService {
   authToken: any;
   user: any;
+  post:any;
+  comment:any;
 
   constructor(
     private http:Http
@@ -59,5 +61,36 @@ export class AuthService {
     localStorage.clear();
   }
 
+  addPost(post){
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/users/post', post, {headers: headers})
+      .map(res => res.json());
+  }
+
+  addComment(comment){
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/users/comment', comment, {headers: headers})
+      .map(res => res.json());
+  }
+
+  getPosts(){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/users/post', {headers: headers})
+      .map(res => res.json());
+  }
+
+  getPostAndComments(){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/users/post/:id', {headers: headers})
+      .map(res => res.json());
+  }
   
 }

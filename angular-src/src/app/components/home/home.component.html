@@ -7,14 +7,14 @@
           class="form-control mb-2"
           maxlength="250"
           placeholder="Enter your subject"
-          [(ngModel)]="subject" 
-          name="subject">
+          [(ngModel)]="newSubject" 
+          name="newSubject">
         <textarea
           class="form-control mb-2"
           maxlength="250"
           placeholder="Enter your post"
-          [(ngModel)]="post" 
-          name="post"
+          [(ngModel)]="newPost" 
+          name="newPost"
         ></textarea>
         <button class="btn btn-lg btn-primary" type="submit">Save</button>
         <button class="btn btn-lg btn-primary" type="submit">Cancel</button>
@@ -26,10 +26,17 @@
 
 <div>
   <h2>Posts</h2>
-  <ul class="posts">
-    <li *ngFor="let post of posts">
-
-    </li>
+  <ul>
+    <ng-container *ngFor="let post of posts">
+        <div class="post">
+          <div class="post-header text-primary">
+            <p class="subject">{{ post.subject }}</p>
+            <p class="username">{{ post.username }}</p>
+          </div>
+          <p class="content text-primary">{{ post.content }}</p>
+          <button class="btn btn-lg btn-primary" type="submit">Comment</button>
+        </div>
+    </ng-container>
   </ul>
 </div>
 

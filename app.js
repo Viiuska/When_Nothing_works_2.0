@@ -17,8 +17,6 @@ mongoose.connection.on('error', (err)=>{
     console.log('Database error: '+err)
 });
 
-
-
 const app = express();
 
 const users = require('./routes/users');
@@ -38,6 +36,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: true }
   }))
+
 
 //Body Parser middleware
 app.use(bodyParser.json());

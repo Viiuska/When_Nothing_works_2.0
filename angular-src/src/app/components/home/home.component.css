@@ -1,0 +1,25 @@
+.post {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .subject {
+    font-size: x-large;
+  }
+  
+  .username {
+    font-size: small;
+  }
+  
+  .content {
+    font-size: medium;
+    margin-top: 5px;
+  }
