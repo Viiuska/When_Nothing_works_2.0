@@ -105,6 +105,7 @@ router.post('/comment', passport.authenticate('jwt', {session:false}), (req, res
       Comment.create({
         username:req.body.username,
         subject:req.body.subject,
+        subSubject:req.body.subSubject,
         content:req.body.content,
       }).then(result =>{
           res.json({success:true, msg:"Comment added"})

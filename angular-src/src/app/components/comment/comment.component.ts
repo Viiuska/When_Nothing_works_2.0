@@ -13,9 +13,10 @@ export class CommentComponent implements OnInit {
   postInfo: String;
   post: any [];
   comment: any [];
-  user: any [];
+  subject:String;
+  newCommentSubject:String;
   newContent:String;
-  newSubSubject:String
+  
 
   constructor(
     private authService: AuthService,
@@ -40,18 +41,20 @@ export class CommentComponent implements OnInit {
   onCommentSubmit(){
     this.authService.getProfile().subscribe(profile => {
       this.route.queryParams.subscribe((params)=>{
+        this.subject= params['postInfo']
+        console.log(this.subject)
         this.authService.getPostAndComments(params['postInfo']).subscribe(data=>{
+          console.log(data.post)
           const newComment={
-          username: profile.user.username,
-          subject: data.post.subject,
-          subSubject:this.newSubSubject,
-          content: this.newContent
+            username: profile.user.username,
+            subject: data.post.subject,
+            subSubject: this.newCommentSubject,
+            content: this.newContent
           }
           this.authService.addComment(newComment).subscribe(data => {
             if(data.success) {
-              this.authService.storeUserData(data.token, data.user);
-              this.flashMessage.show('New post created', {cssClass: 'alert-success', timeout: 5000});
-              this.router.navigate(['home']);
+              this.flashMessage.show('New comment created', {cssClass: 'alert-success', timeout: 5000});
+              location.reload();
             } else {
               this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
               this.router.navigate(['login']);
@@ -71,6 +74,7 @@ export class CommentComponent implements OnInit {
       this.router.navigate(['login']);
       return false;
     });
+    
   }
 
   

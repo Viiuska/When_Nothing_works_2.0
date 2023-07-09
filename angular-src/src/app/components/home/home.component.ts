@@ -37,11 +37,10 @@ export class HomeComponent implements OnInit {
       const newPost={
         username: profile.user.username,
         subject: this.newSubject,
-        post: this.newPostContent
+        content: this.newPostContent
       }
       this.authService.addPost(newPost).subscribe(data => {
         if(data.success) {
-          this.authService.storeUserData(data.token, data.user);
           this.flashMessage.show('New post created', {cssClass: 'alert-success', timeout: 5000});
           this.router.navigate(['home']);
         } else {

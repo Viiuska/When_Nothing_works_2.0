@@ -11,7 +11,7 @@ let CommentSchema = new Schema({
         required:true
     },
     subSubject:{
-        type:String,
+        type:String
     },
     content:{
         type:String,

@@ -20,6 +20,7 @@ import { CommentComponent } from './components/comment/comment.component';
 
 const appRoutes:Routes=[
   {path:'', component:HomeComponent},
+  {path:'home', component:HomeComponent},
   {path:'register', component:RegisterComponent},
   {path:'login', component:LoginComponent},
   {path:'comment', component:CommentComponent},

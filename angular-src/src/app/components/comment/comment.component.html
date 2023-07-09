@@ -1,14 +1,14 @@
 <div class="jumbotron text-center">
   <h1>Add new comment to the post</h1>
   <div>
-    <form class="form-commenting" (submit)="onCommentSubmit()">
+    <form class="form-commenting">
       <div class="form-group">
         <input type="text"
           class="form-control mb-2"
           maxlength="250"
           placeholder="Enter your subject"
-          [(ngModel)]="newSubSubject" 
-          name="newSubSubject">
+          [(ngModel)]="newCommentSubject" 
+          name="newCommentSubject">
         <textarea
           class="form-control mb-2"
           maxlength="250"
@@ -16,8 +16,8 @@
           [(ngModel)]="newContent" 
           name="newContent"
         ></textarea>
-        <button class="btn btn-lg btn-primary" [style.opacity]="authService.loggedIn() ? 1 : 0.5" type="submit">Save</button>
-        <button class="btn btn-lg btn-primary" [style.opacity]="authService.loggedIn() ? 1 : 0.5" type="submit">Cancel</button>
+        <button class="btn btn-lg btn-primary" [style.opacity]="authService.loggedIn() ? 1 : 0.5" (click)="onCommentSubmit()">Save</button>
+        <button class="btn btn-lg btn-primary" [style.opacity]="authService.loggedIn() ? 1 : 0.5" type="reset">Cancel</button>
       </div>
     </form>
   </div>
