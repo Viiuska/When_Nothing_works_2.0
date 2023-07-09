@@ -11,8 +11,8 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 export class HomeComponent implements OnInit {
   posts: any [];
   user: Object;
-  subject: String;
-  post: String;
+  newSubject: String;
+  newPostContent: String;
 
   constructor(
     private authService: AuthService,
@@ -36,27 +36,35 @@ export class HomeComponent implements OnInit {
       this.user = profile.user;
       const newPost={
         username: profile.user.username,
-        subject: this.subject,
-        post: this.post
+        subject: this.newSubject,
+        post: this.newPostContent
       }
       this.authService.addPost(newPost).subscribe(data => {
-      if(data.success) {
-        this.authService.storeUserData(data.token, data.user);
-        this.flashMessage.show('New post created', {cssClass: 'alert-success', timeout: 5000});
-        this.router.navigate(['home']);
-      } else {
-        this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
-        this.router.navigate(['login']);
-      }
+        if(data.success) {
+          this.authService.storeUserData(data.token, data.user);
+          this.flashMessage.show('New post created', {cssClass: 'alert-success', timeout: 5000});
+          this.router.navigate(['home']);
+        } else {
+          this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+          this.router.navigate(['login']);
+        }
     },
      err => {
        console.log(err);
        return false;
      });
      
+  },err =>{
+    console.log(err);
+    this.flashMessage.show('Login first to create a post', {cssClass: 'alert-danger', timeout: 5000});
+    this.router.navigate(['login']);
+    return false;
   });
+  }
 
-    
 
+
+  onViewComment(post: any){
+    this.router.navigate(['comment'], { queryParams: {postInfo: post.subject}});
   }
 }

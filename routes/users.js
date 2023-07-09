@@ -115,11 +115,12 @@ router.post('/comment', passport.authenticate('jwt', {session:false}), (req, res
 
 
 // Display Post and it's comments
-router.get('/post/:id', (req, res, next)=>{
-  Post.findById({subject: req.params}, (err, post) =>{
+router.get('/post/:subject', (req, res, next)=>{
+  const subject =req.params.subject.trim()
+  Post.findOne({subject: subject}, (err, post) =>{
     if(err) return next(err);
     if(post){
-      Comment.findById({subject: req.params}, (err, comment)=>{
+      Comment.find({subject: subject}, (err, comment)=>{
         if(err) return next(err);
         res.json({post:post, comments: comment});
       })

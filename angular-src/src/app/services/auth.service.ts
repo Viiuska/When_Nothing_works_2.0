@@ -86,10 +86,10 @@ export class AuthService {
       .map(res => res.json());
   }
 
-  getPostAndComments(){
+  getPostAndComments(post){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/users/post/:id', {headers: headers})
+    return this.http.get('http://localhost:3000/users/post/'+post, {headers: headers})
       .map(res => res.json());
   }
   

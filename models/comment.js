@@ -10,6 +10,9 @@ let CommentSchema = new Schema({
         type:String,
         required:true
     },
+    subSubject:{
+        type:String,
+    },
     content:{
         type:String,
         required:true

@@ -15,13 +15,14 @@ import { ValidateService } from './services/validate.service';
 import {FlashMessagesModule} from 'angular2-flash-messages'
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
-import { CommentFormComponent } from './components/comment-form/comment-form.component';
+import { CommentComponent } from './components/comment/comment.component';
 
 
 const appRoutes:Routes=[
   {path:'', component:HomeComponent},
   {path:'register', component:RegisterComponent},
   {path:'login', component:LoginComponent},
+  {path:'comment', component:CommentComponent},
   //profile route is protected
   {path:'profile', component:ProfileComponent, canActivate:[AuthGuard]}
 ]
@@ -34,7 +35,7 @@ const appRoutes:Routes=[
     RegisterComponent,
     HomeComponent,
     ProfileComponent,
-    CommentFormComponent
+    CommentComponent
   ],
   imports: [
     BrowserModule,

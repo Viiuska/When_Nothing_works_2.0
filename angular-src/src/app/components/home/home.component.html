@@ -13,11 +13,11 @@
           class="form-control mb-2"
           maxlength="250"
           placeholder="Enter your post"
-          [(ngModel)]="newPost" 
-          name="newPost"
+          [(ngModel)]="newPostContent" 
+          name="newPostContent"
         ></textarea>
-        <button class="btn btn-lg btn-primary" type="submit">Save</button>
-        <button class="btn btn-lg btn-primary" type="submit">Cancel</button>
+        <button class="btn btn-lg btn-primary" [style.opacity]="authService.loggedIn() ? 1 : 0.5" type="submit">Save</button>
+        <button class="btn btn-lg btn-primary" [style.opacity]="authService.loggedIn() ? 1 : 0.5" type="submit">Cancel</button>
     
       </div>
     </form>
@@ -34,7 +34,7 @@
             <p class="username">{{ post.username }}</p>
           </div>
           <p class="content text-primary">{{ post.content }}</p>
-          <button class="btn btn-lg btn-primary" type="submit">Comment</button>
+          <button class="btn btn-lg btn-primary" type="submit" (click)="onViewComment(post)">View</button>
         </div>
     </ng-container>
   </ul>
