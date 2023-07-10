@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
+const moment = require('moment');
 
 const config = require('../config/database');
 const User = require('../models/user');
@@ -74,10 +75,13 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res,
 
 // Post
 router.post('/post', passport.authenticate('jwt', {session:false}), (req, res, next)=>{
+  let time = moment().format('HH:mm DD/MM/YYYY');
   Post.create({
     username:req.body.username,
     subject:req.body.subject,
     content:req.body.content,
+    timestamp:time,
+    commentCount:0
   }).then(result =>{
       res.json({success:true, msg:"Post added"})
   });
@@ -95,33 +99,40 @@ router.get('/post', (req, res, next)=>{
 
 // Add comment
 router.post('/comment', passport.authenticate('jwt', {session:false}), (req, res, next)=>{
-  Post.findOne({subject: req.body.subject}, (err, post) => {
+  Post.findOne({_id: req.body.postId}, (err, post) => {
     if(err) {
       throw err
     };
     if(!post){
       return res.json({success:false, msg:"Post not found"})
     } else{
+      let time = moment().format('HH:mm DD/MM/YYYY');
       Comment.create({
         username:req.body.username,
-        subject:req.body.subject,
+        postId:req.body.postId,
         subSubject:req.body.subSubject,
         content:req.body.content,
+        timestamp:time
       }).then(result =>{
-          res.json({success:true, msg:"Comment added"})
-      });
+          post.commentCount += 1;
+          post.save((err)=>{
+            if(err)return next(err)
+            res.json({success:true, msg:"Comment added"})
+          })
+        });
     }
   });
 });
 
 
 // Display Post and it's comments
-router.get('/post/:subject', (req, res, next)=>{
-  const subject =req.params.subject.trim()
-  Post.findOne({subject: subject}, (err, post) =>{
+
+router.get('/post/:postId', (req, res, next)=>{
+  const postId = req.params.postId;
+  Post.findOne({_id: postId}, (err, post) =>{
     if(err) return next(err);
     if(post){
-      Comment.find({subject: subject}, (err, comment)=>{
+      Comment.find({postId: postId}, (err, comment)=>{
         if(err) return next(err);
         res.json({post:post, comments: comment});
       })

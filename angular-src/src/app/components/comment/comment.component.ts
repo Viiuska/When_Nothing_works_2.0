@@ -41,13 +41,11 @@ export class CommentComponent implements OnInit {
   onCommentSubmit(){
     this.authService.getProfile().subscribe(profile => {
       this.route.queryParams.subscribe((params)=>{
-        this.subject= params['postInfo']
-        console.log(this.subject)
+        //this.subject= params['postInfo']
         this.authService.getPostAndComments(params['postInfo']).subscribe(data=>{
-          console.log(data.post)
           const newComment={
             username: profile.user.username,
-            subject: data.post.subject,
+            postId: data.post._id,
             subSubject: this.newCommentSubject,
             content: this.newContent
           }
@@ -56,8 +54,8 @@ export class CommentComponent implements OnInit {
               this.flashMessage.show('New comment created', {cssClass: 'alert-success', timeout: 5000});
               location.reload();
             } else {
-              this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
-              this.router.navigate(['login']);
+              this.flashMessage.show("Something went wrong", {cssClass: 'alert-danger', timeout: 5000});
+              location.reload();
             }
           }, err => {
               console.log(err);
@@ -70,7 +68,7 @@ export class CommentComponent implements OnInit {
     })}, 
     err =>{
       console.log(err);
-      this.flashMessage.show('Login first to create a post', {cssClass: 'alert-danger', timeout: 5000});
+      this.flashMessage.show('Login first to create a comment', {cssClass: 'alert-danger', timeout: 5000});
       this.router.navigate(['login']);
       return false;
     });

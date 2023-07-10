@@ -31,10 +31,16 @@
         <div class="post">
           <div class="post-header text-primary">
             <p class="subject">{{ post.subject }}</p>
-            <p class="username">{{ post.username }}</p>
+            <p class="username">{{ post.username }} | {{post.timestamp}}</p>
           </div>
           <p class="content text-primary">{{ post.content }}</p>
-          <button class="btn btn-lg btn-primary" type="submit" (click)="onViewComment(post)">View</button>
+          <div class="post-footer">
+            <button class="btn btn-lg btn-primary" type="submit" (click)="onViewComment(post)">View</button>
+            <div class="footer-icons">
+              <i class="fa fa-comment">{{ post.commentCount }}</i>
+              <i class="fa fa-thumbs-up">{{ likeCount }}</i>
+            </div>
+          </div>
         </div>
     </ng-container>
   </ul>

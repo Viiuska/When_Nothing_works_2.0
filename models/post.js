@@ -13,6 +13,16 @@ let PostSchema = new Schema({
     content:{
         type:String,
         required:true
+    },
+    timestamp:{
+        type:Date
+    },
+    timestamp:{
+        type:String
+    },
+    commentCount:{
+        type:Number,
+        default:0
     }
 });
 

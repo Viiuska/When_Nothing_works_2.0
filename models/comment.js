@@ -6,7 +6,7 @@ let CommentSchema = new Schema({
         type:String,
         required:true
     },
-    subject:{
+    postId:{
         type:String,
         required:true
     },
@@ -16,6 +16,9 @@ let CommentSchema = new Schema({
     content:{
         type:String,
         required:true
+    },
+    timestamp:{
+        type:String
     }
 });
 
