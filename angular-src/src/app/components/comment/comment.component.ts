@@ -72,9 +72,29 @@ export class CommentComponent implements OnInit {
       this.router.navigate(['login']);
       return false;
     });
-    
   }
 
-  
+  onThumbsUp(comment: any){
+    this.authService.getProfile().subscribe(profile => {
+      const liked={
+        username:profile.user.username,
+        id:comment._id
+      }
+      this.authService.addThumbsUp(liked).subscribe(data=>{
+        if(data.success) {
+          this.flashMessage.show('New comment created', {cssClass: 'alert-success', timeout: 5000});
+          location.reload();
+        }else {
+          this.flashMessage.show("Something went wrong", {cssClass: 'alert-danger', timeout: 5000});
+          location.reload();
+        }
+      })
+    },
+     err => {
+       console.log(err);
+       this.flashMessage.show('Login first to like a comment', {cssClass: 'alert-danger', timeout: 5000});
+       return false;
+     });
+  }
 
 }

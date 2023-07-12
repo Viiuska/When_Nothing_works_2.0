@@ -10,6 +10,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 })
 export class HomeComponent implements OnInit {
   posts: any [];
+  post:any[];
   user: Object;
   newSubject: String;
   newPostContent: String;
@@ -65,5 +66,29 @@ export class HomeComponent implements OnInit {
 
   onViewComment(post: any){
     this.router.navigate(['comment'], { queryParams: {postInfo: post._id}});
+  }
+
+  onThumbsUp(post: any){
+    this.authService.getProfile().subscribe(profile => {
+      const liked={
+        username:profile.user.username,
+        id:post._id
+      }
+      this.authService.addThumbsUp(liked).subscribe(data=>{
+        if(data.success) {
+          this.flashMessage.show('New comment created', {cssClass: 'alert-success', timeout: 5000});
+          location.reload();
+        }else {
+          this.flashMessage.show("Something went wrong", {cssClass: 'alert-danger', timeout: 5000});
+          location.reload();
+        }
+      })
+    },
+     err => {
+       console.log(err);
+       this.flashMessage.show('Login first to like a comment', {cssClass: 'alert-danger', timeout: 5000});
+       return false;
+     });
+
   }
 }

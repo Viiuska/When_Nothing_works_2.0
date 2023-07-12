@@ -41,8 +41,10 @@
             <p class="subject">{{ comments.subSubject }}</p>
             <p class="username">{{ comments.username }} | {{comments.timestamp}}</p>
           </div>
-          <p class="content text-primary">{{ comments.content }}</p>
-          <i class="fa fa-thumbs-up">{{ likeCount }}</i>
+          <p class="content text-primary"> {{ comments.content }}</p>
+          <button class="btn btn-link btn-thumbs-up" (click)="onThumbsUp(comments)">
+            <i class="fa fa-thumbs-up"> {{ comments.likeCount }}</i>
+          </button>
         </div>
     </ng-container>
   </ul>

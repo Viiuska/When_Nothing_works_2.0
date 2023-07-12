@@ -19,6 +19,10 @@ let CommentSchema = new Schema({
     },
     timestamp:{
         type:String
+    },
+    likeCount:{
+        type:Number,
+        default:0
     }
 });
 

@@ -10,6 +10,7 @@ export class AuthService {
   user: any;
   post:any;
   comment:any;
+  like:any;
 
   constructor(
     private http:Http
@@ -93,4 +94,14 @@ export class AuthService {
       .map(res => res.json());
   }
   
+  addThumbsUp(like){
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/users/thumbsup', like, {headers: headers})
+      .map(res => res.json());
+  }
+
+
 }

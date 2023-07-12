@@ -37,8 +37,10 @@
           <div class="post-footer">
             <button class="btn btn-lg btn-primary" type="submit" (click)="onViewComment(post)">View</button>
             <div class="footer-icons">
-              <i class="fa fa-comment">{{ post.commentCount }}</i>
-              <i class="fa fa-thumbs-up">{{ likeCount }}</i>
+              <button class="btn btn-link btn-thumbs-up" (click)="onThumbsUp(post)">
+                <i class="fa fa-thumbs-up"> {{ post.likeCount }}</i>
+              </button>
+              <i class="fa fa-comment"> {{ post.commentCount }}</i>
             </div>
           </div>
         </div>

@@ -72,6 +72,100 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res,
     res.json({user:req.user});
 });
 
+// Liked comments/posts
+router.post('/thumbsup',passport.authenticate('jwt', {session:false}), (req, res, next)=>{
+  User.findOne({username: req.body.username}, (err, user)=>{
+    if(err) {
+      throw err
+    };
+    if(!user){
+      return res.json({success:false, msg:"User not found"})
+    } else{
+      User.findOne({likedId:req.body.id}, (err, liked)=>{
+        let userLike=user.likedId
+        if(err) {
+          throw err
+        };
+        if(liked){
+          Post.findOne({_id: req.body.id}, (err, post)=>{
+            if(err) {
+              throw err
+            };
+            if(!post){
+              Comment.findOne({_id:req.body.id}, (err, comment)=>{
+                if(err) {
+                  throw err
+                };
+                if(!comment){
+                  return res.json({success:false, msg:"Comment not found"})
+                } else{
+                  comment.likeCount -= 1;
+                  comment.save((err)=>{
+                    if(err)return next(err)
+                  })
+                  userLike.pull(req.body.id);
+                  user.save((err)=>{
+                    if(err)return next(err)
+                    res.json({success:true, msg:"Like removed comment (user)"})
+                  })
+
+                }
+              })
+            } if(post){
+            post.likeCount -= 1;
+            post.save((err)=>{
+              if(err)return next(err)
+            })
+            userLike.pull(req.body.id);
+            user.save((err)=>{
+              if(err)return next(err)
+              res.json({success:true, msg:"Like removed post"})
+            })
+          }
+          })
+        } else{
+          Post.findOne({_id: req.body.id}, (err, post)=>{
+            if(err) {
+              throw err
+            };
+            if(!post){
+              Comment.findOne({_id:req.body.id}, (err, comment)=>{
+                if(err) {
+                  throw err
+                };
+                if(!comment){
+                  return res.json({success:false, msg:"Comment not found"})
+                } else{
+                  comment.likeCount += 1;
+                  comment.save((err)=>{
+                    if(err)return next(err)
+                  })
+                  userLike.push(req.body.id);
+                  user.save((err)=>{
+                    if(err)return next(err)
+                    res.json({success:true, msg:"Like added comment"})
+                  })
+                }
+              })
+            } if(post){
+            post.likeCount += 1;
+            post.save((err)=>{
+              if(err)return next(err)
+            })
+            userLike.push(req.body.id);
+            user.save((err)=>{
+              if(err)return next(err)
+              res.json({success:true, msg:"Like added post"})
+            })
+          }
+          })
+        }
+        
+      })
+      
+    }
+  })
+})
 
 // Post
 router.post('/post', passport.authenticate('jwt', {session:false}), (req, res, next)=>{
