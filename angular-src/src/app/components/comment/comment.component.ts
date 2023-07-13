@@ -97,4 +97,7 @@ export class CommentComponent implements OnInit {
      });
   }
 
+  onViewProfile(post:any){
+    this.router.navigate(['view-profiles'], {queryParams:{username:post.username}})
+  }
 }

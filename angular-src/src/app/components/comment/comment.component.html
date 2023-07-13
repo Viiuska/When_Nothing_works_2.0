@@ -27,7 +27,7 @@
   <div *ngIf="post">
       <div class="post-header text-primary">
         <p class="subject">{{ post.subject }}</p>
-        <p class="username">{{ post.username }} | {{post.timestamp}}</p>
+        <p class="username" (click)="onViewProfile(post)">{{ post.username }} | {{post.timestamp}}</p>
       </div>
       <p class="content text-primary">{{ post.content }}</p>
     </div>
@@ -39,7 +39,7 @@
         <div class="comment">
           <div class="comment-header text-primary">
             <p class="subject">{{ comments.subSubject }}</p>
-            <p class="username">{{ comments.username }} | {{comments.timestamp}}</p>
+            <p class="username" (click)="onViewProfile(comments)">{{ comments.username }} | {{comments.timestamp}}</p>
           </div>
           <p class="content text-primary"> {{ comments.content }}</p>
           <button class="btn btn-link btn-thumbs-up" (click)="onThumbsUp(comments)">

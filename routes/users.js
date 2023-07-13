@@ -20,7 +20,8 @@ router.post('/register', (req, res, next)=>{
                 name:req.body.name,
                 email:req.body.email,
                 username:req.body.username,
-                password:hash
+                password:hash,
+                joined:moment().format('DD/MM/YYYY')
             }
             ).then(result =>{
                 res.json({success:true, msg:"User registered"})
@@ -70,6 +71,22 @@ router.post('/authenticate', (req, res, next)=>{
 // Profile
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next)=>{
     res.json({user:req.user});
+});
+
+// View other profiles
+router.get('/profile/:username', (req, res, next)=>{
+  User.findOne({username:req.params.username}, (err, user)=>{
+    if(err) {
+      throw err
+    };
+    if(!user){
+      return res.json({success:false, msg:"User not found"})
+    } if(user) {
+      res.json({user:user});
+    } else{
+      res.json({success:false, msg:"User not found"})
+    }
+  })
 });
 
 // Liked comments/posts

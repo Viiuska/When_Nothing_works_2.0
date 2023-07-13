@@ -17,6 +17,12 @@ let UserSchema = new Schema({
         type:String,
         required: true
     },
+    joined:{
+        type:String
+    },
+    bio:{
+        type:String
+    },
     likedId:{
         type:[]
     }

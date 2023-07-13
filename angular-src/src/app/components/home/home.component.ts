@@ -68,6 +68,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['comment'], { queryParams: {postInfo: post._id}});
   }
 
+  onViewProfile(post:any){
+    this.router.navigate(['view-profiles'], {queryParams:{username:post.username}})
+  }
+
   onThumbsUp(post: any){
     this.authService.getProfile().subscribe(profile => {
       const liked={

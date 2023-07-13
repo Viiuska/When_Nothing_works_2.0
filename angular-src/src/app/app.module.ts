@@ -16,6 +16,7 @@ import {FlashMessagesModule} from 'angular2-flash-messages'
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { CommentComponent } from './components/comment/comment.component';
+import { ViewProfilesComponent } from './components/view-profiles/view-profiles.component';
 
 
 const appRoutes:Routes=[
@@ -24,6 +25,7 @@ const appRoutes:Routes=[
   {path:'register', component:RegisterComponent},
   {path:'login', component:LoginComponent},
   {path:'comment', component:CommentComponent},
+  {path:'view-profiles', component:ViewProfilesComponent},
   //profile route is protected
   {path:'profile', component:ProfileComponent, canActivate:[AuthGuard]}
 ]
@@ -36,7 +38,8 @@ const appRoutes:Routes=[
     RegisterComponent,
     HomeComponent,
     ProfileComponent,
-    CommentComponent
+    CommentComponent,
+    ViewProfilesComponent
   ],
   imports: [
     BrowserModule,

@@ -93,6 +93,13 @@ export class AuthService {
     return this.http.get('http://localhost:3000/users/post/'+post, {headers: headers})
       .map(res => res.json());
   }
+
+  getViewProfiles(user){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/users/profile/'+user, {headers: headers})
+      .map(res => res.json());
+  }
   
   addThumbsUp(like){
     let headers = new Headers();

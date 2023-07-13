@@ -10,8 +10,25 @@
         <a class="nav-link" [routerLink]="['/']">Home <span></span></a>
       </li>
     </ul>
+    
 
     <ul class="navbar-nav ml-auto">
+      <!--https://mdbootstrap.com/docs/angular/navigation/navbar/# search form taken-->
+      <form (submit)="onSearch()" class="d-flex input-group w-auto">
+        <input
+          type="search"
+          [(ngModel)]="searchContent"
+          name="searchContent"
+          class="form-control rounded"
+          id="searchContent"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <span class="input-primary" id="search-addon">
+          <i class="fa fa-search"></i>
+        </span>
+      </form>
+
       <li class="nav-item" *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
         <a class="nav-link" [routerLink]="['/profile']">Profile </a>
       </li>
