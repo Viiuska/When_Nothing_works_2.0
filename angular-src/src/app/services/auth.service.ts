@@ -80,6 +80,20 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  search(post){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/users/'+post, {headers: headers})
+      .map(res => res.json());
+  }
+
+  getPostsById(post){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/users/post/ids', post, {headers: headers})
+      .map(res => res.json());
+  }
+
   getPosts(){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -98,6 +112,13 @@ export class AuthService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.get('http://localhost:3000/users/profile/'+user, {headers: headers})
+      .map(res => res.json());
+  }
+
+  updateProfile(user){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/users/profile/edit', user, {headers: headers})
       .map(res => res.json());
   }
   

@@ -28,8 +28,8 @@ export class CommentComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe((params)=>{
       this.authService.getPostAndComments(params['postInfo']).subscribe(data=>{
-      this.post = data.post
-      this.comment = data.comments
+        this.post = data.post
+        this.comment = data.comments
       },
       err => {
         console.log(err);
@@ -82,7 +82,6 @@ export class CommentComponent implements OnInit {
       }
       this.authService.addThumbsUp(liked).subscribe(data=>{
         if(data.success) {
-          this.flashMessage.show('New comment created', {cssClass: 'alert-success', timeout: 5000});
           location.reload();
         }else {
           this.flashMessage.show("Something went wrong", {cssClass: 'alert-danger', timeout: 5000});

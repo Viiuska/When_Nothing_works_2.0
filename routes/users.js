@@ -21,7 +21,8 @@ router.post('/register', (req, res, next)=>{
                 email:req.body.email,
                 username:req.body.username,
                 password:hash,
-                joined:moment().format('DD/MM/YYYY')
+                joined:moment().format('DD/MM/YYYY'),
+                bio:""
             }
             ).then(result =>{
                 res.json({success:true, msg:"User registered"})
@@ -72,6 +73,25 @@ router.post('/authenticate', (req, res, next)=>{
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next)=>{
     res.json({user:req.user});
 });
+
+// Edit profile bio
+router.post('/profile/edit', (req, res, next)=>{
+  User.findOne({username:req.body.username}, (err, user)=>{
+    if(err) {
+      throw err
+    };
+    if(!user){
+      return res.json({success:false, msg:"User not found"})
+    } else {
+      user.bio = req.body.bio
+      user.save((err)=>{
+        if(err)return next(err)
+        res.json({success:true, user:user});
+      })
+    }
+  })
+});
+
 
 // View other profiles
 router.get('/profile/:username', (req, res, next)=>{
@@ -192,6 +212,7 @@ router.post('/post', passport.authenticate('jwt', {session:false}), (req, res, n
     subject:req.body.subject,
     content:req.body.content,
     timestamp:time,
+    likeCount:0,
     commentCount:0
   }).then(result =>{
       res.json({success:true, msg:"Post added"})
@@ -207,6 +228,17 @@ router.get('/post', (req, res, next)=>{
   })
 });
 
+router.post('/post/ids', (req, res, next)=>{
+  const idsArr =req.body.id
+  Post.find({_id: idsArr.split(',') }, (err, posts) =>{
+    if(err) return next(err);
+    if(posts){
+      res.json({post:posts});
+    } else{
+      res.json({msg: "Something went wrong while searhing content"});
+    }
+  })
+})
 
 // Add comment
 router.post('/comment', passport.authenticate('jwt', {session:false}), (req, res, next)=>{
@@ -223,6 +255,7 @@ router.post('/comment', passport.authenticate('jwt', {session:false}), (req, res
         postId:req.body.postId,
         subSubject:req.body.subSubject,
         content:req.body.content,
+        likeCount:0,
         timestamp:time
       }).then(result =>{
           post.commentCount += 1;
@@ -237,7 +270,6 @@ router.post('/comment', passport.authenticate('jwt', {session:false}), (req, res
 
 
 // Display Post and it's comments
-
 router.get('/post/:postId', (req, res, next)=>{
   const postId = req.params.postId;
   Post.findOne({_id: postId}, (err, post) =>{
@@ -253,6 +285,22 @@ router.get('/post/:postId', (req, res, next)=>{
   })
 });
 
-
+// Search Content
+router.get('/:search', (req, res, next)=>{
+  Post.find({
+    $or:[
+      {subject:{$regex: new RegExp(req.params.search, 'i')}},
+      {content:{$regex: new RegExp(req.params.search, 'i')}}
+    ],
+  },
+  '_id', (err, searchResult)=>{
+    if(err){
+      return res.json({success:false, msg:"Error searching posts"})
+    }
+    const postIds = searchResult.map((post)=> post._id);
+    return res.json({success:true, contentId:postIds})
+  }
+  );
+});
 
 module.exports = router;

@@ -15,10 +15,6 @@
     font-size: x-large;
   }
   
-  .username {
-    font-size: small;
-  }
-  
   .content {
     font-size: medium;
     margin-top: 5px;
@@ -37,7 +33,6 @@
   }
   .fa-thumbs-up {
     font-size: 26px;
-    color: #494d51;
     color: #848b91;
   }
 

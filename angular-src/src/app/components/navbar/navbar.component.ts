@@ -9,6 +9,8 @@ import { FlashMessagesService } from 'angular2-flash-messages';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  searchContent:Object;
+
 
   constructor(
     private authService: AuthService,
@@ -17,6 +19,17 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  onSearch(){
+    this.authService.search(this.searchContent).subscribe(data =>{
+      if (data.contentId && data.contentId.length > 0){
+        this.router.navigate(['home'], { queryParams: {id: data.contentId}});
+      }
+    },err => {
+      console.log(err);
+      return false;
+    });
   }
 
   onLogoutClick() {

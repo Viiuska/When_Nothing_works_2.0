@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -18,17 +19,31 @@ export class HomeComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private flashMessage: FlashMessagesService
+    private flashMessage: FlashMessagesService,
+    private route:ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.authService.getPosts().subscribe(content=>{
-      this.posts = content.post
-    },
-    err => {
-      console.log(err);
-      return false;
-    });
+    this.route.queryParams.subscribe(params =>{
+      const searchIds = {id : params['id']};
+      if(searchIds.id){
+        this.authService.getPostsById(searchIds).subscribe(data =>{
+          this.posts = data.post
+        },
+        err=>{
+          console.log(err);
+          return false;
+        })
+      } else{
+        this.authService.getPosts().subscribe(content=>{
+        this.posts = content.post
+        },
+        err => {
+          console.log(err);
+          return false;
+        });
+      }
+    })
   }
 
 
@@ -80,7 +95,6 @@ export class HomeComponent implements OnInit {
       }
       this.authService.addThumbsUp(liked).subscribe(data=>{
         if(data.success) {
-          this.flashMessage.show('New comment created', {cssClass: 'alert-success', timeout: 5000});
           location.reload();
         }else {
           this.flashMessage.show("Something went wrong", {cssClass: 'alert-danger', timeout: 5000});

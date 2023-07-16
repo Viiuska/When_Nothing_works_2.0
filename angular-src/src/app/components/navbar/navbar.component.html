@@ -24,9 +24,11 @@
           placeholder="Search"
           aria-label="Search"
         />
-        <span class="input-primary" id="search-addon">
-          <i class="fa fa-search"></i>
-        </span>
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-primary">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
       </form>
 
       <li class="nav-item" *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
@@ -44,3 +46,7 @@
     </ul>
   </div>
 </nav>
+
+<div class="footer">
+&copy; 2023 Copyright: Viia Mäntymäki
+</div>

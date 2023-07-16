@@ -1,10 +1,10 @@
-.fa-search{
-    color: #848b91;
-    padding-right: 15px;
-    padding-left: 15px;
-    padding-top: 20px;
-}
-.w-auto{
-    justify-content: center;
-    margin-top: 2px;
-}
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #848b91;
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+  }

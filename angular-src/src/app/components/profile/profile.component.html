@@ -9,3 +9,17 @@
   </div>
 </div>
 
+<div class="text-center" *ngIf="user">
+  <form class="form-bio" (submit)="onUpdateBio()">
+    <h3>Bio</h3>
+    <textarea
+        class="form-control mb-2"
+        maxlength="500"
+        placeholder="Tell us about yourself..."
+        [(ngModel)]="bioContent" 
+        name="bioContent"
+    ></textarea>
+    <button class="btn btn-lg btn-primary" type="submit">Save</button>
+    <button class="btn btn-lg btn-primary" type="reset">Cancel</button>
+  </form>
+</div>
