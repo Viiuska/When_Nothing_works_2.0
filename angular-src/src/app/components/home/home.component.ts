@@ -104,7 +104,7 @@ export class HomeComponent implements OnInit {
     },
      err => {
        console.log(err);
-       this.flashMessage.show('Login first to like a comment', {cssClass: 'alert-danger', timeout: 5000});
+       this.flashMessage.show('Login first to like a post', {cssClass: 'alert-danger', timeout: 5000});
        return false;
      });
 
