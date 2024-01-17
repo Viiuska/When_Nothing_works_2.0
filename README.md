@@ -7,7 +7,7 @@ There is also search function and users can view each others profiles via clicki
 
 
 The project documentation contains more detailed information about the project.  
-Documentation: https://lut-my.sharepoint.com/:w:/g/personal/viia_mantymaki_student_lut_fi/EUuo_e7xnUxBm_9PvSYdOzsB9VR-0AcbSf3lM5Cr10rJyA?e=4AkDfz
+Documentation: [https://lut-my.sharepoint.com/:w:/g/personal/viia_mantymaki_student_lut_fi/EUuo_e7xnUxBm_9PvSYdOzsB9VR-0AcbSf3lM5Cr10rJyA?e=4AkDfz](https://lut-my.sharepoint.com/:w:/g/personal/viia_mantymaki_student_lut_fi/EUuo_e7xnUxBm_9PvSYdOzsB9VR-0AcbSf3lM5Cr10rJyA?e=eEuLY8)
 
 ### How to run  
 Open two terminal windows. In the first window write **npm start**. 
