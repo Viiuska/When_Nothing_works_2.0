@@ -12,7 +12,10 @@ Documentation: [https://lut-my.sharepoint.com/:w:/g/personal/viia_mantymaki_stud
 ### How to run  
 Open two terminal windows. In the first window write **npm start**. 
 The second window must be bash terminal window, write **ng serve**.
-Now open http://localhost:4200/
+Now open http://localhost:4200/  
+
+
+### [Demovideo](https://lut-my.sharepoint.com/:v:/g/personal/viia_mantymaki_student_lut_fi/Efi270RtVBRMklBZSNFo-bMBRHQBjdR1jSiarYnkcR7t-g?e=KZFuNc&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
 
 ### Important notes  
 Node.js version 12 must be used.
